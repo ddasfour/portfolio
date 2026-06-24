@@ -1,0 +1,228 @@
+<!-- Debjit Das portfolio (index.html)
+     Publish: put this file, named index.html, in your GitHub repo
+     "ddasfour.github.io" so it goes live at https://ddasfour.github.io/
+     Note: the "reduced authentication failures" line has no percentage on
+     purpose. Add a number back only if you can defend it in interview. -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Debjit Das, Identity and Access Management, Security Operations</title>
+<meta name="description" content="Debjit Das, IAM and security operations professional. Hands-on identity labs, SSO, MFA, SAML, OIDC, joiner mover leaver, Splunk investigations.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#0d1117; --surface:#161b22; --surface-2:#1c2128;
+    --line:#30363d; --text:#e6edf3; --muted:#8b949e;
+    --accent:#34d399; --accent-dim:#1f6f50;
+    --maxw:920px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:"Inter",system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .mono{font-family:"JetBrains Mono",monospace}
+
+  header{position:sticky;top:0;z-index:10;background:rgba(13,17,23,.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .bar{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .brand{font-family:"Sora";font-weight:700;letter-spacing:-.01em}
+  .brand b{color:var(--accent)}
+  nav a{color:var(--muted);font-size:14px;margin-left:22px}
+  nav a:hover{color:var(--text);text-decoration:none}
+  @media(max-width:600px){nav a{margin-left:14px;font-size:13px}}
+
+  .hero{padding:84px 0 56px}
+  .eyebrow{font-family:"JetBrains Mono";font-size:13px;color:var(--accent);letter-spacing:.04em;margin-bottom:18px}
+  h1{font-family:"Sora";font-weight:700;font-size:clamp(36px,7vw,64px);line-height:1.05;letter-spacing:-.02em;margin:0 0 20px}
+  .hero p.lead{font-size:clamp(17px,2.4vw,20px);color:var(--text);max-width:640px;margin:0 0 14px}
+  .hero p.sub{color:var(--muted);max-width:640px;margin:0 0 28px}
+  .elig{font-family:"JetBrains Mono";font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:10px 14px;display:inline-block;margin-bottom:30px}
+  .elig b{color:var(--text);font-weight:500}
+  .cta a{display:inline-block;font-family:"Sora";font-weight:600;font-size:15px;padding:11px 20px;border-radius:7px;margin-right:12px;margin-bottom:10px}
+  .cta .primary{background:var(--accent);color:#06281c}
+  .cta .primary:hover{background:#4ee0a6;text-decoration:none}
+  .cta .ghost{border:1px solid var(--line);color:var(--text)}
+  .cta .ghost:hover{border-color:var(--accent);text-decoration:none}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:8px 0 0}
+  .stat{background:var(--surface);padding:18px 16px}
+  .stat .n{font-family:"Sora";font-weight:700;font-size:24px;color:var(--accent)}
+  .stat .l{font-family:"JetBrains Mono";font-size:12px;color:var(--muted);margin-top:2px}
+  @media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+  section{padding:54px 0;border-top:1px solid var(--line)}
+  .label{font-family:"JetBrains Mono";font-size:13px;color:var(--accent);margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em}
+  h2{font-family:"Sora";font-weight:600;font-size:clamp(24px,4vw,30px);letter-spacing:-.01em;margin:0 0 22px}
+  .prose{max-width:680px;color:var(--text)}
+  .prose .quiet{color:var(--muted)}
+
+  .labs{display:grid;gap:16px}
+  .lab{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px 24px;transition:border-color .2s}
+  .lab:hover{border-color:var(--accent-dim)}
+  .lab .top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .lab h3{font-family:"Sora";font-weight:600;font-size:18px;margin:0}
+  .lab .tag{font-family:"JetBrains Mono";font-size:11px;color:var(--accent);border:1px solid var(--accent-dim);border-radius:20px;padding:2px 10px;white-space:nowrap}
+  .lab p{margin:10px 0 0;color:var(--muted)}
+  .lab .repo{font-family:"JetBrains Mono";font-size:13px;margin-top:12px;display:inline-block}
+
+  .skillgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:600px){.skillgrid{grid-template-columns:1fr}}
+  .skillcard{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px}
+  .skillcard h4{font-family:"JetBrains Mono";font-size:13px;color:var(--accent);margin:0 0 8px;font-weight:500;text-transform:uppercase;letter-spacing:.05em}
+  .skillcard p{margin:0;color:var(--text);font-size:15px}
+
+  .tl{display:grid;gap:0}
+  .row{display:grid;grid-template-columns:140px 1fr;gap:18px;padding:14px 0;border-bottom:1px solid var(--line)}
+  .row:last-child{border-bottom:0}
+  .row .when{font-family:"JetBrains Mono";font-size:13px;color:var(--muted)}
+  .row .what b{font-family:"Sora";font-weight:600}
+  .row .what span{color:var(--muted)}
+  @media(max-width:600px){.row{grid-template-columns:1fr;gap:2px}}
+
+  footer{border-top:1px solid var(--line);padding:40px 0 60px;color:var(--muted);font-size:14px}
+  footer a{margin-right:18px}
+</style>
+
+<header>
+  <div class="wrap bar">
+    <div class="brand">Built<b>In</b>TheGap</div>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#labs">Labs</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" style="border-top:0">
+    <div class="wrap">
+      <div class="eyebrow">Identity and Access Management, Security Operations</div>
+      <h1>I spent the gap<br>building, not waiting.</h1>
+      <p class="lead">I'm Debjit Das, an IAM and security operations professional with three years in identity and access at ServiceNow and 12+ years in IT.</p>
+      <p class="sub">Between roles, I built hands on identity and security labs to keep my skills sharp and practical. This is what I made.</p>
+
+      <div class="elig mono">Irish citizen, full right to work in the UK, no sponsorship, eligible for BPSS</div>
+
+      <div class="cta">
+        <a class="primary" href="#labs">See the labs</a>
+        <a class="ghost" href="https://github.com/ddasfour" target="_blank" rel="noopener">GitHub</a>
+      </div>
+
+      <div class="stats" aria-label="Summary stats">
+        <div class="stat"><div class="n">5</div><div class="l">hands on labs</div></div>
+        <div class="stat"><div class="n">2</div><div class="l">public repos</div></div>
+        <div class="stat"><div class="n">50+</div><div class="l">tests written</div></div>
+        <div class="stat"><div class="n">SC&#8209;300</div><div class="l">in progress</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="label">About</div>
+      <h2>What I do</h2>
+      <div class="prose">
+        <p>I have 12+ years of IT experience. I started in technical support, moved into software engineering, and spent the last three years in security operations and identity and access support at ServiceNow, investigating and resolving incidents across SSO, MFA, SAML, OIDC and the joiner mover leaver lifecycle.</p>
+        <p>I supported large enterprise SaaS customers with SSO, SAML 2.0, OAuth 2.0, OIDC and MFA, investigated identity incidents using Splunk, and carried out root cause analysis to help reduce recurring authentication failures. I understand how identity works in production because I have dealt with it breaking in production.</p>
+        <p class="quiet">I am now building hands on identity and security labs to deepen my skills, working towards Microsoft SC&#8209;300, and looking for my next role in IAM, Identity Operations or Security Operations.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="labs">
+    <div class="wrap">
+      <div class="label">Labs</div>
+      <h2>Hands on work</h2>
+      <div class="labs">
+
+        <div class="lab">
+          <div class="top"><h3>Entra ID OIDC onboarding</h3><span class="tag">identity</span></div>
+          <p>Set up an application onboarding using Microsoft Entra ID and OIDC, covering app registration, token issuance and claims mapping, and documented the full flow.</p>
+        </div>
+
+        <div class="lab">
+          <div class="top"><h3>Inactive account audit tool (PowerShell)</h3><span class="tag">identity, JML</span></div>
+          <p>A PowerShell tool that identifies stale and inactive accounts and produces audit ready reports, mirroring the leaver and access review part of the identity lifecycle.</p>
+          <a class="repo" href="https://github.com/ddasfour/inactive-user-audit" target="_blank" rel="noopener">github.com/ddasfour/inactive-user-audit</a>
+        </div>
+
+        <div class="lab">
+          <div class="top"><h3>Entra OIDC token test framework</h3><span class="tag">identity, testing</span></div>
+          <p>A framework that tests OIDC token validation against a live Entra tenant (29 tests). Key finding: an unregistered redirect URI is not rejected up front. Entra shows the login page first and only blocks after authentication, and a mismatched token audience caused repeated 401 loops.</p>
+          <a class="repo" href="https://github.com/ddasfour/entra-oidc-token-test-framework" target="_blank" rel="noopener">github.com/ddasfour/entra-oidc-token-test-framework</a>
+        </div>
+
+        <div class="lab">
+          <div class="top"><h3>API testing suite</h3><span class="tag">engineering</span></div>
+          <p>A test suite validating API behaviour, authentication and error handling (23 tests), keeping my testing and scripting skills current.</p>
+        </div>
+
+        <div class="lab">
+          <div class="top"><h3>Multi platform data integration</h3><span class="tag">engineering</span></div>
+          <p>An integration project moving and reconciling data across multiple platforms (Boomi, Snowflake, Salesforce and others), documenting and resolving issues along the way.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap">
+      <div class="label">Skills</div>
+      <h2>What I work with</h2>
+      <div class="skillgrid">
+        <div class="skillcard"><h4>identity and access</h4><p>SSO, MFA, SAML 2.0, OIDC, OAuth 2.0, LDAP, IdP integrations, joiner mover leaver, access reviews, RBAC, least privilege</p></div>
+        <div class="skillcard"><h4>security operations</h4><p>Incident investigation and triage (P1 to P4), Splunk and SIEM log analysis, event correlation, root cause analysis, vulnerability validation</p></div>
+        <div class="skillcard"><h4>email security</h4><p>SMTP, SPF, DKIM, DMARC analysis, mitigation with email security owners (Mimecast)</p></div>
+        <div class="skillcard"><h4>tools and technical</h4><p>ServiceNow and Splunk in production support. Jira, PowerShell, Python and SQL used in my home labs.</p></div>
+        <div class="skillcard"><h4>process</h4><p>ITIL change control, documentation (runbooks, knowledge articles), stakeholder communication</p></div>
+        <div class="skillcard"><h4>credentials and learning</h4><p>Identity Security Leadership course, SailPoint University (completed). Microsoft SC&#8209;300, in progress.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="background">
+    <div class="wrap">
+      <div class="label">Background</div>
+      <h2>Experience and education</h2>
+      <div class="tl">
+        <div class="row"><div class="when">2022 to 2025</div><div class="what"><b>Senior Technical Support Engineer</b><br><span>ServiceNow, Dublin. Part of the Security Operations and IAM squad.</span></div></div>
+        <div class="row"><div class="when">2021 to 2022</div><div class="what"><b>Senior Technical Support Engineer</b><br><span>Principle HR Ltd (ServiceNow platform), Dublin</span></div></div>
+        <div class="row"><div class="when">2012 to 2021</div><div class="what"><b>Software Engineer and Technical Support</b><br><span>EVRY, Pioneer Financial and Management Services Ltd, Eircom, General Motors IT Services</span></div></div>
+        <div class="row"><div class="when">SailPoint</div><div class="what"><b>Identity Security Leadership course, SailPoint University</b><br><span>Completed. Covers how IAM and IGA combine into identity security, zero trust, and the identity lifecycle.</span></div></div>
+        <div class="row"><div class="when">2024</div><div class="what"><b>Professional Diploma in Cybersecurity (Part time)</b><br><span>University College Dublin, Ireland</span></div></div>
+        <div class="row"><div class="when">earlier</div><div class="what"><b>Master of Computer Applications, Information Technology, and BSc Computer Science</b><br><span>India</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="label">Contact</div>
+      <h2>Get in touch</h2>
+      <div class="prose">
+        <p>I am looking for my next role in IAM, Identity Operations or Security Operations. Open to a conversation.</p>
+        <p class="mono" style="font-size:15px">
+          <a href="mailto:ddebjitfour@gmail.com">ddebjitfour@gmail.com</a><br>
+          <a href="https://www.linkedin.com/in/debjit-das-85270033/" target="_blank" rel="noopener">linkedin.com/in/debjit-das-85270033</a><br>
+          <a href="https://github.com/ddasfour" target="_blank" rel="noopener">github.com/ddasfour</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    Irish citizen, full right to work in the UK, no sponsorship required, eligible for BPSS<br>
+    <span style="display:inline-block;margin-top:10px">Copyright <span id="yr"></span> Debjit Das</span>
+  </div>
+</footer>
+<script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
