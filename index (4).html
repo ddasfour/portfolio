@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Debjit Das — Identity and Access Management, Security Operations</title>
+<meta name="description" content="Debjit Das, IAM and security operations professional. Hands-on identity labs covering SSO, MFA, SAML, OIDC, RBAC, joiner-mover-leaver, and Splunk investigations." />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Debjit Das — Identity and Access Management, Security Operations" />
+<meta property="og:description" content="Hands-on identity and security labs: SSO, MFA, SAML, OIDC, RBAC, joiner-mover-leaver, Splunk investigations. Real builds, real problems, documented fixes." />
+<meta property="og:url" content="https://ddasfour.github.io/portfolio/" />
+<meta property="og:image" content="https://ddasfour.github.io/portfolio/preview.png" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#f6f7f9; --panel:#ffffff; --ink:#14181f; --muted:#59606d; --faint:#8a92a0;
+  --line:#e6e9ee; --accent:#0b7a75; --accent-ink:#075e5a; --accent-soft:#e6f4f2; --amber:#b7791f;
+  --radius:14px; --maxw:1080px;
+  --display:"Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --body:"Inter", ui-sans-serif, system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--body); line-height:1.6; -webkit-font-smoothing:antialiased}
+a{color:inherit}
+img{max-width:100%}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 22px}
+.mono{font-family:var(--mono)}
+.eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent-ink); margin:0 0 10px}
+
+header.nav{position:sticky; top:0; z-index:50; background:rgba(246,247,249,.85); backdrop-filter:blur(10px); border-bottom:1px solid var(--line)}
+.nav-inner{display:flex; align-items:center; gap:20px; height:62px}
+.brand{font-family:var(--display); font-weight:700; letter-spacing:-.01em; font-size:17px; display:flex; align-items:center; gap:9px}
+.brand .dot{width:10px;height:10px;border-radius:3px;background:var(--accent); box-shadow:0 0 0 3px var(--accent-soft)}
+nav.links{margin-left:auto; display:flex; gap:6px; flex-wrap:wrap}
+nav.links a{font-size:14px; color:var(--muted); text-decoration:none; padding:8px 12px; border-radius:9px; font-weight:500}
+nav.links a:hover{color:var(--ink); background:#eef0f3}
+
+.hero{padding:74px 0 44px}
+.hero h1{font-family:var(--display); font-weight:700; letter-spacing:-.02em; font-size:clamp(30px,5vw,52px); line-height:1.05; margin:0 0 22px; max-width:16ch}
+.hero p.lead{font-size:18px; color:var(--muted); max-width:62ch; margin:0 0 26px}
+.cta-row{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:26px}
+.btn{display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:15px; padding:11px 20px; border-radius:10px; text-decoration:none; border:1px solid var(--line); background:var(--panel); color:var(--ink); transition:transform .12s ease, border-color .12s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{background:var(--accent); border-color:var(--accent); color:#fff}
+.btn.primary:hover{background:var(--accent-ink)}
+.status{font-family:var(--mono); font-size:12.5px; color:var(--accent-ink); background:var(--accent-soft); border:1px solid #cfe8e5; display:inline-block; padding:8px 14px; border-radius:999px}
+
+.stats{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:38px; border-top:1px solid var(--line); padding-top:28px}
+.stat .num{font-family:var(--display); font-weight:700; font-size:32px; letter-spacing:-.02em}
+.stat .lbl{font-size:13px; color:var(--muted)}
+
+section{padding:56px 0; border-top:1px solid var(--line)}
+section h2{font-family:var(--display); font-weight:700; letter-spacing:-.01em; font-size:clamp(24px,3.4vw,34px); margin:6px 0 10px}
+section .intro{color:var(--muted); max-width:64ch; margin:0 0 30px}
+
+.labs{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+.lab{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:24px; display:flex; flex-direction:column; gap:14px; transition:transform .14s ease, box-shadow .14s ease}
+.lab:hover{transform:translateY(-3px); box-shadow:0 14px 40px rgba(20,24,31,.07)}
+.lab .tag{font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--accent-ink)}
+.lab h3{font-family:var(--display); font-weight:600; font-size:20px; margin:0; letter-spacing:-.01em}
+.lab .block .k{font-family:var(--mono); font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--faint); display:block; margin-bottom:4px}
+.lab .block p{margin:0 0 14px; font-size:14.5px; color:var(--muted)}
+.lab .block p:last-child{margin-bottom:0}
+.chips{display:flex; gap:7px; flex-wrap:wrap; margin-top:auto; padding-top:6px}
+.chip{font-family:var(--mono); font-size:11.5px; color:var(--ink); background:#f1f3f6; border:1px solid var(--line); border-radius:7px; padding:4px 9px}
+
+.patterns{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+.pattern{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:22px}
+.pattern h4{font-family:var(--display); font-weight:600; font-size:17px; margin:0 0 8px}
+.pattern p{margin:0; font-size:14.5px; color:var(--muted)}
+
+.skills{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+.skill{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:22px}
+.skill h4{font-family:var(--mono); font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--accent-ink); margin:0 0 10px}
+.skill p{margin:0; font-size:14px; color:var(--muted)}
+
+.timeline{display:grid; gap:2px}
+.tl-row{display:grid; grid-template-columns:120px 1fr; gap:20px; padding:16px 0; border-bottom:1px solid var(--line)}
+.tl-row:last-child{border-bottom:none}
+.tl-when{font-family:var(--mono); font-size:12.5px; color:var(--faint); padding-top:2px}
+.tl-what strong{font-family:var(--display); font-weight:600; font-size:16px}
+.tl-what span{display:block; color:var(--muted); font-size:14.5px; margin-top:3px}
+
+.contact-card{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:30px}
+.contact-card a{color:var(--accent-ink); text-decoration:none; font-weight:600}
+.contact-card a:hover{text-decoration:underline}
+.contact-links{display:flex; gap:22px; flex-wrap:wrap; margin:16px 0 20px; font-family:var(--mono); font-size:14px}
+
+footer{border-top:1px solid var(--line); padding:30px 0 46px; color:var(--muted); font-size:13.5px}
+footer .cw{display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; align-items:center}
+footer .rights{font-family:var(--mono); font-size:12.5px; color:var(--faint)}
+
+.reveal{opacity:0; transform:translateY(14px); transition:opacity .5s ease, transform .5s ease}
+.reveal.in{opacity:1; transform:none}
+
+@media (max-width:820px){
+  .labs,.patterns,.skills{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr; gap:22px}
+  .tl-row{grid-template-columns:1fr}
+  .tl-when{padding-top:0}
+}
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1; transform:none; transition:none}
+  html{scroll-behavior:auto}
+  .btn:hover,.lab:hover{transform:none}
+}
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:6px}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <div class="brand"><span class="dot"></span> IdentityInPractice</div>
+    <nav class="links">
+      <a href="#about">About</a>
+      <a href="#labs">Labs</a>
+      <a href="#patterns">Patterns</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero" style="border-top:none">
+    <p class="eyebrow reveal">Identity and Access Management &middot; Security Operations</p>
+    <h1 class="reveal">I build identity systems, test how they fail, and document the fix.</h1>
+    <p class="lead reveal">
+      I am Debjit Das. Three years in identity and access at ServiceNow and 12+ years in IT,
+      now building hands-on identity and security labs to keep my skills sharp and practical.
+    </p>
+    <p class="lead reveal" style="margin-bottom:10px">
+      This site exists to show the work, not just list it. Every lab below is something I built with my own hands.
+      For each one you can follow the full story: the impact, what I did, the problems I hit, and exactly how I solved them.
+    </p>
+    <div class="cta-row reveal">
+      <a class="btn primary" href="#labs">See the labs</a>
+      <a class="btn" href="https://github.com/ddasfour" target="_blank" rel="noopener">GitHub &#8599;</a>
+    </div>
+    <div class="reveal"><span class="status">Irish citizen &middot; full right to work in the UK &middot; no sponsorship required &middot; eligible for BPSS</span></div>
+
+    <div class="stats reveal">
+      <div class="stat"><div class="num">7</div><div class="lbl">hands-on labs</div></div>
+      <div class="stat"><div class="num">12+</div><div class="lbl">years in IT</div></div>
+      <div class="stat"><div class="num">100+</div><div class="lbl">tests written</div></div>
+      <div class="stat"><div class="num">SC-300</div><div class="lbl">in progress</div></div>
+    </div>
+  </section>
+
+  <section id="about">
+    <p class="eyebrow reveal">About</p>
+    <h2 class="reveal">What I do</h2>
+    <p class="intro reveal">
+      I have 12+ years of IT experience. I started in technical support, moved into software engineering,
+      and spent the last three years in security operations and identity and access support at ServiceNow,
+      investigating and resolving incidents across SSO, MFA, SAML, OIDC and the joiner-mover-leaver lifecycle.
+    </p>
+    <p class="intro reveal">
+      I supported large enterprise SaaS customers with SSO, SAML 2.0, OAuth 2.0, OIDC and MFA, investigated identity
+      incidents using Splunk, and carried out root cause analysis to help reduce recurring authentication failures.
+      I understand how identity works in production because I have dealt with it breaking in production.
+    </p>
+    <p class="intro reveal">
+      I am now building hands-on identity and security labs to deepen my skills, working towards Microsoft SC-300,
+      and looking for my next role in IAM, Identity Operations or Security Operations.
+    </p>
+  </section>
+
+  <section id="labs">
+    <p class="eyebrow reveal">Hands-on work</p>
+    <h2 class="reveal">The labs</h2>
+    <p class="intro reveal">Each card leads with the impact and what I did. Together they trace identity end to end &mdash; from proving who a user is (authentication) to deciding what they can reach (authorization), across the modern and legacy standards.</p>
+
+    <div class="labs">
+
+      <article class="lab reveal">
+        <span class="tag">Lab &middot; Microsoft Entra ID</span>
+        <h3>Entra ID OIDC onboarding &amp; incident runbooks</h3>
+        <div class="block">
+          <span class="k">Impact</span>
+          <p>Configured OIDC sign-in end-to-end on Microsoft Entra ID, hit two real authentication incidents, and wrote audit-ready runbooks &mdash; control implementation with the evidence a real audit expects.</p>
+          <span class="k">What I did</span>
+          <p>Built OIDC sign-in with MSAL, then debugged two live failures from the logs: <span class="mono">AADSTS50011</span> (a redirect-URI mismatch caused by a single trailing slash) and <span class="mono">AADSTS7000215</span> (the secret ID copied instead of the secret Value). Corrected the App Registration, rotated the secret, and documented runbooks RB-001 and RB-002.</p>
+          <span class="k">Concept proven</span>
+          <p>Entra ID is exact &mdash; one character breaks the whole auth flow, and Sign-in &amp; Audit logs are where you find the truth. Mapped to NIST CSF and ITIL incident/problem/change.</p>
+        </div>
+        <div class="chips"><span class="chip">Entra ID</span><span class="chip">OIDC</span><span class="chip">MSAL</span><span class="chip">Runbooks</span><span class="chip">NIST CSF</span><span class="chip">ITIL</span></div>
+      </article>
+
+      <article class="lab reveal">
+        <span class="tag">Lab &middot; PowerShell / SecOps</span>
+        <h3>PowerShell inactive-account security tool</h3>
+        <div class="block">
+          <span class="k">Impact</span>
+          <p>Built a PowerShell tool that surfaces one of the most common real-world security risks &mdash; dormant accounts &mdash; and produces a review-ready report.</p>
+          <span class="k">What I did</span>
+          <p>Wrote a script that finds user accounts inactive for 90+ days, exports the results to CSV, and flags accounts to review before deactivation. Worked through execution-policy blocks and Git merge conflicts along the way.</p>
+          <span class="k">Concept proven</span>
+          <p>Unused accounts are a standing attack surface; automated detection is the first step to closing it.</p>
+        </div>
+        <div class="chips"><span class="chip">PowerShell</span><span class="chip">CSV report</span><span class="chip">Account hygiene</span><span class="chip">Git</span></div>
+      </article>
+
+      <article class="lab reveal">
+        <span class="tag">Lab &middot; Test automation</span>
+        <h3>Python &amp; pytest API test framework</h3>
+        <div class="block">
+          <span class="k">Impact</span>
+          <p>Built a reusable automated test framework &mdash; the foundation I later pointed at a live identity platform.</p>
+          <span class="k">What I did</span>
+          <p>Wrote a Python pytest framework with 23 tests against public APIs, covering status codes, response structure, response time, and error handling &mdash; all runnable with one command.</p>
+          <span class="k">Concept proven</span>
+          <p>A solid, repeatable test harness turns manual checking into one-command verification.</p>
+        </div>
+        <div class="chips"><span class="chip">Python</span><span class="chip">pytest</span><span class="chip">API testing</span><span class="chip">Automation</span></div>
+      </article>
+
+      <article class="lab reveal">
+        <span class="tag">Lab &middot; Entra ID / testing</span>
+        <h3>Entra ID OIDC token test framework</h3>
+        <div class="block">
+          <span class="k">Impact</span>
+          <p>Took the pytest foundation from the previous lab and aimed it at a live Microsoft Entra ID OIDC app registration &mdash; testing a real enterprise identity platform.</p>
+          <span class="k">What I did</span>
+          <p>Wrote 29 passing tests checking token-endpoint status codes, JWT response structure, response time, rejection of invalid credentials, blocking of unregistered redirect URIs, and real token acquisition via the MSAL client-credentials flow. Every run showed up in Entra ID Sign-in logs.</p>
+          <span class="k">Concept proven</span>
+          <p>Entra ID doesn&rsquo;t reject an unregistered redirect URI immediately &mdash; it shows the login page first and blocks only after authentication. The kind of detail that catches SSO integrations at scale.</p>
+        </div>
+        <div class="chips"><span class="chip">Entra ID</span><span class="chip">OIDC</span><span class="chip">pytest</span><span class="chip">JWT</span><span class="chip">MSAL</span></div>
+      </article>
+
+      <article class="lab reveal">
+        <span class="tag">Lab &middot; Authorization / RBAC</span>
+        <h3>Role-Based Access Control with Auth0</h3>
+        <div class="block">
+          <span class="k">Impact</span>
+          <p>Proved the control that stops a logged-in user from reaching admin-only resources &mdash; the safeguard behind privilege-misuse prevention and a core requirement in most security audits.</p>
+          <span class="k">What I did</span>
+          <p>Registered an OIDC application in Auth0, created <span class="mono">admin</span> and <span class="mono">user</span> roles, provisioned two users, and wrote a Post-Login Action to inject roles into the token as a custom claim. Built a single-page app that reads the role and enforces access, returning &ldquo;Access Denied&rdquo; for unauthorized users.</p>
+          <span class="k">Concept proven</span>
+          <p>Authentication (who you are) vs authorization (what you are allowed to do). Being logged in is not the same as being allowed in.</p>
+        </div>
+        <div class="chips"><span class="chip">Auth0</span><span class="chip">RBAC</span><span class="chip">OIDC</span><span class="chip">Actions</span><span class="chip">JWT claims</span></div>
+      </article>
+
+      <article class="lab reveal">
+        <span class="tag">Lab &middot; Federation / SSO</span>
+        <h3>SAML 2.0 Single Sign-On with Auth0</h3>
+        <div class="block">
+          <span class="k">Impact</span>
+          <p>Showed how enterprise SSO federates identity between an Identity Provider and a Service Provider &mdash; the standard still underpinning most large enterprise SaaS access.</p>
+          <span class="k">What I did</span>
+          <p>Configured Auth0 as the SAML IdP against a test Service Provider, initiated a SAML authentication flow, and inspected the returned assertion. Verified the signed XML assertion, user attributes and NameID, and confirmed role claims passed through to the SP.</p>
+          <span class="k">Concept proven</span>
+          <p>How a signed SAML assertion carries identity and attributes across a trust boundary between IdP and SP.</p>
+        </div>
+        <div class="chips"><span class="chip">Auth0</span><span class="chip">SAML 2.0</span><span class="chip">SSO</span><span class="chip">Assertion</span><span class="chip">SAML-tracer</span></div>
+      </article>
+
+      <article class="lab reveal">
+        <span class="tag">Lab &middot; Modern identity / OIDC</span>
+        <h3>OpenID Connect with Auth0</h3>
+        <div class="block">
+          <span class="k">Impact</span>
+          <p>Demonstrated the modern identity standard behind web and mobile apps, and contrasted it directly with SAML to show why teams choose one over the other.</p>
+          <span class="k">What I did</span>
+          <p>Configured Auth0 as the OpenID Provider, ran an OIDC flow through the OIDC Debugger, obtained an ID Token (JWT), and decoded it to validate the <span class="mono">sub</span>, <span class="mono">iss</span>, <span class="mono">aud</span> and <span class="mono">email</span> claims and the RS256 signature.</p>
+          <span class="k">Concept proven</span>
+          <p>OIDC delivers the same identity as SAML but as a compact, signed JSON token instead of heavy XML &mdash; same job, lighter format.</p>
+        </div>
+        <div class="chips"><span class="chip">Auth0</span><span class="chip">OIDC</span><span class="chip">JWT</span><span class="chip">Scopes</span><span class="chip">jwt.io</span></div>
+      </article>
+
+    </div>
+  </section>
+
+  <section id="patterns">
+    <p class="eyebrow reveal">What the labs taught me</p>
+    <h2 class="reveal">Patterns I keep seeing</h2>
+    <p class="intro reveal">Across every lab, the same kinds of problems came up again and again. These are the lessons I now carry into any identity or integration work.</p>
+    <div class="patterns">
+      <div class="pattern reveal"><h4>The tool says everything is fine when it is not</h4><p>Many failures were silent &mdash; no error, just wrong or missing data. I learned to never trust a green tick on its own and to always check the real output: row counts, token validity, and what actually reached the destination.</p></div>
+      <div class="pattern reveal"><h4>Authentication is the hardest part every time</h4><p>Tokens, headers, redirect URIs and OAuth settings caused more trouble than the actual logic. The small details mattered most: one wrong character in a token, a missing Authorization header, or a redirect URI that did not match exactly.</p></div>
+      <div class="pattern reveal"><h4>Error messages often point the wrong way</h4><p>Generic messages like &ldquo;please contact support&rdquo;, or a raw code error shown to the user, hid the real cause. I learned to read past the message and find the true root cause in the logs.</p></div>
+      <div class="pattern reveal"><h4>Date and format mismatches break things quietly</h4><p>Joins returned nothing and comparisons failed because two systems stored the same value in different formats. Aligning the formats before comparing fixed most of these.</p></div>
+      <div class="pattern reveal"><h4>Go to the source documentation</h4><p>Most fixes did not come from a platform help page. They came from the original vendor docs, the API guide, or testing the actual behaviour myself.</p></div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <p class="eyebrow reveal">Skills</p>
+    <h2 class="reveal">What I work with</h2>
+    <div class="skills">
+      <div class="skill reveal"><h4>Identity and access</h4><p>SSO, MFA, SAML 2.0, OIDC, OAuth 2.0, LDAP, IdP integrations, joiner-mover-leaver, access reviews, RBAC, least privilege.</p></div>
+      <div class="skill reveal"><h4>Security operations</h4><p>Incident investigation and triage (P1&ndash;P4), Splunk and SIEM log analysis, event correlation, root cause analysis, vulnerability validation.</p></div>
+      <div class="skill reveal"><h4>Email security</h4><p>SMTP, SPF, DKIM, DMARC analysis, mitigation with email security owners (Mimecast).</p></div>
+      <div class="skill reveal"><h4>Tools and technical</h4><p>ServiceNow and Splunk in production support. Jira, PowerShell, Python and SQL used in my home labs.</p></div>
+      <div class="skill reveal"><h4>Process</h4><p>ITIL change control, documentation (runbooks, knowledge articles), stakeholder communication.</p></div>
+      <div class="skill reveal"><h4>Credentials and learning</h4><p>Identity Security Leadership course, SailPoint University (completed). Microsoft SC-300, in progress.</p></div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <p class="eyebrow reveal">Background</p>
+    <h2 class="reveal">Experience and education</h2>
+    <div class="timeline">
+      <div class="tl-row reveal"><div class="tl-when">2022 &ndash; 2025</div><div class="tl-what"><strong>Senior Technical Support Engineer</strong><span>ServiceNow, Dublin. Part of the Security Operations and IAM squad.</span></div></div>
+      <div class="tl-row reveal"><div class="tl-when">2021 &ndash; 2022</div><div class="tl-what"><strong>Senior Technical Support Engineer</strong><span>Principle HR Ltd (ServiceNow platform), Dublin.</span></div></div>
+      <div class="tl-row reveal"><div class="tl-when">2012 &ndash; 2021</div><div class="tl-what"><strong>Software Engineer and Technical Support</strong><span>EVRY, Pioneer Financial and Management Services Ltd, Eircom, General Motors IT Services.</span></div></div>
+      <div class="tl-row reveal"><div class="tl-when">SailPoint</div><div class="tl-what"><strong>Identity Security Leadership course, SailPoint University</strong><span>Completed. Covers how IAM and IGA combine into identity security, zero trust, and the identity lifecycle.</span></div></div>
+      <div class="tl-row reveal"><div class="tl-when">2024</div><div class="tl-what"><strong>Professional Diploma in Cybersecurity (part-time)</strong><span>University College Dublin, Ireland.</span></div></div>
+      <div class="tl-row reveal"><div class="tl-when">earlier</div><div class="tl-what"><strong>Master of Computer Applications &amp; BSc Computer Science</strong><span>India.</span></div></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <p class="eyebrow reveal">Contact</p>
+    <h2 class="reveal">Get in touch</h2>
+    <div class="contact-card reveal">
+      <p style="margin:0 0 6px; font-size:17px">I am looking for my next role in IAM, Identity Operations or Security Operations. Open to a conversation.</p>
+      <div class="contact-links">
+        <a href="mailto:ddebjitfour@gmail.com">ddebjitfour@gmail.com</a>
+        <a href="https://www.linkedin.com/in/debjit-das-85270033/" target="_blank" rel="noopener">LinkedIn &#8599;</a>
+        <a href="https://github.com/ddasfour" target="_blank" rel="noopener">GitHub &#8599;</a>
+      </div>
+      <span class="status">Irish citizen &middot; full right to work in the UK &middot; no sponsorship required &middot; eligible for BPSS</span>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap cw">
+    <div>Built and maintained by Debjit Das &mdash; identity in practice.</div>
+    <div class="rights">&copy; 2026 Debjit Das. All rights reserved.</div>
+  </div>
+  <div class="wrap" style="margin-top:12px; font-size:12.5px; color:var(--faint); max-width:70ch">
+    The content, labs and write-ups on this site are my own original work and may not be reproduced,
+    republished or redistributed without permission.
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
